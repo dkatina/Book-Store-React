@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { InputFormProp, EmailFormProp, PasswordFormProp, ConfirmPasswordProp } from './FormPrompts'
 import { Typography } from '@mui/material';
+import theme from '../themes/PrimaryTheme';
 
 // const Item = styled(Paper)(({ theme }) => ({
 //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -15,7 +16,7 @@ import { Typography } from '@mui/material';
 export default function RegistrationForm() {
   return (
     <Box sx={{ width: '75%', mx: 'auto'}}>
-        <Typography variant="h6" component="div" color='warning'>Register</Typography>
+        <Typography variant="h6" sx={{color:theme.palette.warning.main}}>Register</Typography>
       <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={6}>
           <InputFormProp>First Name</InputFormProp>
