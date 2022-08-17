@@ -20,7 +20,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ShoppingCart from './ShoppingCart';
-import { ListItemSecondaryAction } from '@mui/material';
+
 
 const stuff = [
   {text:'Account', path:'/account', icon:AccountCircleIcon},

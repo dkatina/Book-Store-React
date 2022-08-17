@@ -17,7 +17,7 @@ export const primaryTheme= {
       main: '#F17105',
     },
     info: {
-      main: '#4E937A',
+      main: '#00B97F',
     },
   },
 };

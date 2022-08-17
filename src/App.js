@@ -1,11 +1,17 @@
 import NavBar from './components/NavBar'
-import RegistrationForm from './components/RegisterForm';
+import Register from './forms/Register'
+import Login from './forms/Login';
+import FindBook from './forms/FindBook';
+import Book from './components/Book';
 
 function App() {
   return (
     <div className="App">
       <NavBar>
-        <RegistrationForm/>
+        <Register/>
+        <Login/>
+        <FindBook/>
+        <Book/>
       </NavBar>
     </div>
   );
