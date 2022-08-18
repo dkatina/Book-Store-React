@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import Button from '../components/Button'
 import  Box  from '@mui/material/Box'
+import Error from '../components/Error'
+import useRegister from '../hooks/useRegister'
 
 //Doubles as Edit/Delete Form when offered a User
 
@@ -33,8 +35,16 @@ export default function LoginForm({user}) {
         password:'',
         confirm_password: '',
     }
+
+    const [registerInfo, setRegisterInfo]=useState({})
+    const [error,setError]=useState('')
+
+    useRegister(registerInfo, setRegisterInfo, setError)
+
+
     const handleSubmit=(values)=>{
         console.log(values)
+        setRegisterInfo(values)
     }
 
     const handleDelete=()=>{
@@ -125,6 +135,7 @@ export default function LoginForm({user}) {
         />
         }
         <Button type="submit" sx={{ maxWidth:"600px", width:'100%', mx: 'auto'}}>{user? 'Edit Account':'Register'}</Button>
+        <Error>{error}</Error>
         </Box>
     </form>
   )

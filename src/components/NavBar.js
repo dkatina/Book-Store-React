@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
@@ -20,12 +21,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ShoppingCart from './ShoppingCart';
+import { Link } from 'react-router-dom'
 
 
 const stuff = [
-  {text:'Account', path:'/account', icon:AccountCircleIcon},
+  {text:'Account', path:'/edit', icon:AccountCircleIcon},
   {text:'Find Book', path:'/find_book', icon:SearchRoundedIcon},
-  {text:'My Books', path:'/mybooks', icon:MenuBookTwoToneIcon}
+  {text:'My Books', path:'/reading_list', icon:MenuBookTwoToneIcon},
+  {text:'Logout', path:'/logout', icon:LogoutIcon}
 ]
 
 
@@ -93,10 +96,19 @@ export default function NavBar({children}) {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div" color='secondary'>
-            Banana's Bookshelf
-          </Typography>
-          <ShoppingCart/>
+          <Link to='/' style={{textDecoration:'none', flexGrow: 1}}>
+            <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div" color='secondary'>
+              Banana's Bookshelf
+            </Typography>
+          </Link>
+          <Link to='/register' style={{textDecoration:'none'}}>
+            <Typography variant='p' color='secondary'>
+              login/register
+            </Typography>
+          </Link>
+          <Link to='/cart'> 
+            <ShoppingCart/>
+          </Link>
           <IconButton
             color="secondary"
             aria-label="open drawer"
@@ -137,12 +149,16 @@ export default function NavBar({children}) {
         <List>
           {stuff.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon >
-                  {<item.icon color='primary'/>}
-                </ListItemIcon>
-                <ListItemText primary={item.text} sx={{color:'white'}}/>
-              </ListItemButton>
+              
+                <ListItemButton>
+                  <Link to={item.path} style={{textDecoration:'none', display:'flex'}}>
+                  <ListItemIcon sx={{mt:.5}}>
+                    {<item.icon color='primary'/>}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{color:'white'}}/>
+                  </Link>
+                </ListItemButton>
+              
             </ListItem>
           ))}
         </List>
