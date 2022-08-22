@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -8,26 +9,20 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import useGetAllBooks from '../hooks/useGetAllBooks'
+import { Box } from '@mui/system'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
+import { AppContext } from '../context/AppContext';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useNavigate } from 'react-router-dom'
 
 
-
-const a_book={
-    author: 'Arlene Dahl',
-    created_on: 'Mon, 28 Feb 2022 19:21:17 GMT',
-    id: 18, 
-    img: 'https://s2982.pcdn.co/wp-content/uploads/2018/11/always-ask-a-man-book-cover.jpg',
-    pages: 198, 'subject': 'self help',
-    summary: 'For women traveling back to the US 1950',
-    title: 'ALWAYS ASK A MAN: THE KEY TO FEMININITY'
-}
-
-const ExpandMore = styled((props) => {
+  const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
+  })(({ theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
@@ -35,17 +30,27 @@ const ExpandMore = styled((props) => {
     }),
   }));
 
-export default function RecipeReviewCard({book = a_book}) {
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
+
+export default function BookCard({book}) {
+    const {books} = useGetAllBooks()
+    const [expandedId, setExpandedId] = React.useState(-1);
+    const { addToList, readingList, user } = useContext(AppContext)
+
+    const navigate = useNavigate()
+    
+    const handleExpandClick = (i) => {
+      setExpandedId(expandedId === i? -1 : i);
     };
   
     return (
-      <Card sx={{ maxWidth: 345 }} >
+      <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+      {books?.books.map((book)=>(
+      <Card key={book.id} sx={{ width: 345, mb: 3}}>
         <CardHeader
-          title={book.title}
+          subheader={book.title}
+          fontSize='10'
+          sx={{minHeight: 100, textAlign: 'center', color: 'black'}}
+
         />
         <CardMedia
           component="img"
@@ -61,26 +66,36 @@ export default function RecipeReviewCard({book = a_book}) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to cart">
-            <FavoriteIcon color='secondary'/>
-          </IconButton>
-          <IconButton aria-label="add to library">
-            <AddShoppingCartIcon color='secondary'/>
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
+            {user ? 
+            (readingList.filter(thisBook => thisBook.id === book.id)).length >= 1 ?
+              <IconButton aria-label="add to library">
+                <DownloadDoneIcon color='secondary'/>
+              </IconButton>:<IconButton aria-label="add to reading list" onClick={()=>{addToList(book)}}>
+                <AddCircleOutlineIcon color='secondary'/>
+              </IconButton>: 
+              ''}
+            <IconButton aria-label="Info" onClick={()=>navigate(`/books/${book.id}`)}>
+              <VisibilityIcon color='info'/>
+            </IconButton>
+              
+            
+          
+            <ExpandMore
+            expand={expandedId === books.books.indexOf(book)}
+            onClick={() => handleExpandClick(books.books.indexOf(book))}
+            aria-expanded={expandedId === books.books.indexOf(book)}
             aria-label="show more"
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse in={expandedId === books.books.indexOf(book)} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>{book.summary}</Typography>
           </CardContent>
         </Collapse>
       </Card>
+      ))}
+      </Box>
     );
   }

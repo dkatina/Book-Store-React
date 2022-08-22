@@ -33,3 +33,23 @@ export const getBook = async (bookID, cancelToken) =>{
     }
 
 }
+
+export const getAllBooks = async (cancelToken) =>{
+    let error
+    let books
+
+    const response = await apiNoAuth(cancelToken).get(endpoint_book)
+    if (response.ok){
+        books = response.data
+    }else if (response.status === 404){
+        error= "Your Books were Not Found"
+    }
+    else{
+        error = "An Unexpected Error Occurred.  Please Try Again Later"  
+    }
+    return {
+        error,
+        books
+    }
+
+}

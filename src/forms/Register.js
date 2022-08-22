@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
@@ -6,7 +6,9 @@ import Button from '../components/Button'
 import  Box  from '@mui/material/Box'
 import Error from '../components/Error'
 import useRegister from '../hooks/useRegister'
-
+import { AppContext } from '../context/AppContext'
+import useDelete from '../hooks/useDelete'
+import useEdit from '../hooks/useEdit'
 //Doubles as Edit/Delete Form when offered a User
 
 const FormSchema = Yup.object(
@@ -15,9 +17,11 @@ const FormSchema = Yup.object(
         last_name: Yup.string().required(),
         email:Yup.string().email("Must be a valid e-mail format").required(),
         password:Yup.string().required(),
-        confirm_password: Yup.string().required()
+        confirm_password: Yup.string()
     }
 )
+
+
 
 
 // let this_user = {
@@ -27,28 +31,43 @@ const FormSchema = Yup.object(
 //     password: '12345'
 // }
 
-export default function LoginForm({user}) {
+export default function RegisterForm() {
+    const {user} = useContext(AppContext)
+
     const initialValues={
         first_name:user?.first_name ?? '',
-        last_name: user?.last_name ?? '',
-        email: user?.email ?? '',
+        last_name:user?.last_name ?? '',
+        email:user?.email ?? '',
         password:'',
         confirm_password: '',
-    }
+    } 
+    
 
+    
     const [registerInfo, setRegisterInfo]=useState({})
+    const [userEdits, setUserEdits]=useState({})
     const [error,setError]=useState('')
+    const [delConf, setDelConf]=useState(false)
 
     useRegister(registerInfo, setRegisterInfo, setError)
+    useEdit(userEdits, setUserEdits)
+    useDelete(delConf, setDelConf)
 
 
     const handleSubmit=(values)=>{
+        console.log('submitted')
         console.log(values)
-        setRegisterInfo(values)
+        if(user){
+            setUserEdits(values)
+        }else{
+            setRegisterInfo(values)}
     }
 
     const handleDelete=()=>{
-        console.log('Deleting User: ', user.first_name)
+        if (user){
+            console.log('Deleting User: ', user.first_name)
+            setDelConf(true)
+        }
     }
 
     const formik = useFormik({
@@ -134,7 +153,7 @@ export default function LoginForm({user}) {
             color='info'
         />
         }
-        <Button type="submit" sx={{ maxWidth:"600px", width:'100%', mx: 'auto'}}>{user? 'Edit Account':'Register'}</Button>
+        <Button type="submit" sx={{ maxWidth:"600px", width:'100%', mx: 'auto'}}>{user?.token? 'Edit Account':'Register'}</Button>
         <Error>{error}</Error>
         </Box>
     </form>

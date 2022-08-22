@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,17 +19,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import ShoppingCart from './ShoppingCart';
 import { Link } from 'react-router-dom'
+import { AppContext } from '../context/AppContext';
 
 
 const stuff = [
   {text:'Account', path:'/edit', icon:AccountCircleIcon},
-  {text:'Find Book', path:'/find_book', icon:SearchRoundedIcon},
-  {text:'My Books', path:'/reading_list', icon:MenuBookTwoToneIcon},
-  {text:'Logout', path:'/logout', icon:LogoutIcon}
+  {text:'My Reading List', path:'/reading_list', icon:MenuBookTwoToneIcon},
 ]
 
 
@@ -82,6 +80,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NavBar({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const {user, setUser} = useContext(AppContext)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,6 +89,11 @@ export default function NavBar({children}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogout = () => {
+    setUser('')
+    setOpen(false);
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -101,15 +105,12 @@ export default function NavBar({children}) {
               Banana's Bookshelf
             </Typography>
           </Link>
+          {!user ? 
           <Link to='/register' style={{textDecoration:'none'}}>
             <Typography variant='p' color='secondary'>
               login/register
             </Typography>
-          </Link>
-          <Link to='/cart'> 
-            <ShoppingCart/>
-          </Link>
-          <IconButton
+          </Link>: <IconButton
             color="secondary"
             aria-label="open drawer"
             edge="end"
@@ -117,7 +118,10 @@ export default function NavBar({children}) {
             sx={{ ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton>}
+          
+         
+          
         </Toolbar>
       </AppBar>
       <Main open={open}>
@@ -161,6 +165,18 @@ export default function NavBar({children}) {
               
             </ListItem>
           ))}
+          <ListItem key='logout' disablePadding>
+              
+              <ListItemButton onClick={()=>handleLogout()}>
+                <Link to='/' style={{textDecoration:'none', display:'flex'}}>
+                <ListItemIcon sx={{mt:.5}}>
+                  <LogoutIcon color='primary'/>
+                </ListItemIcon>
+                <ListItemText primary='Logout' sx={{color:'white'}}/>
+                </Link>
+              </ListItemButton>
+            
+          </ListItem>
         </List>
       </Box>
       </Drawer>

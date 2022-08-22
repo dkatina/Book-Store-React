@@ -20,6 +20,15 @@ export const primaryTheme= {
       main: '#00B97F',
     },
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: ""
+        }
+      }
+    }
+  }
 };
 
 const theme=createTheme(primaryTheme);

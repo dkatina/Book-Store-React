@@ -1,11 +1,11 @@
 import NavBar from './components/NavBar'
 import RegisterView from './views/RegisterView';
 import LoginView from './views/LoginView';
-import FindBookView from './views/FindBookView';
 import HomePageView from './views/HomePageView';
 import MyCart from './views/MyCart';
 import ReadingListView from './views/ReadingListView';
-import { Route, Router, Routes} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
+import ViewSingleBook from './views/ViewSingleBook';
 
 function App() {
   return (
@@ -15,11 +15,11 @@ function App() {
           
           <Route path='/' element={<HomePageView/>}/>
           <Route path='/edit' element={<RegisterView/>}/>
-          <Route path='/find_book' element={<FindBookView/>}/>
           <Route path='/register' element={<RegisterView/>}/>
           <Route path='/login' element={<LoginView/>}/>
           <Route path='/cart' element={<MyCart/>}/>
           <Route path='/reading_list' element={<ReadingListView/>}/>
+          <Route path='/books/:bookId' element={<ViewSingleBook/>}/>
           
         </Routes>
       </NavBar>
