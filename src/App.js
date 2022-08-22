@@ -9,7 +9,7 @@ import ViewSingleBook from './views/ViewSingleBook';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: 'rgb(201, 143, 104)', height: '100%', minHeight:'100vh'}}>
       <NavBar>
         <Routes>
           
