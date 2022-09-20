@@ -2,8 +2,8 @@
 
 ## Stack
 
-Javascript (React, MUI) Front End
-Python (Flask) REST API
+Javascript (React, MUI) Front End   
+Python (Flask) REST API   
 postgreSQL (ElephantSQL) Database
 
 (back end not included in this repository)
