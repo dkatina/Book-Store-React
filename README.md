@@ -10,4 +10,4 @@ postgreSQL (ElephantSQL) Database
 
 ## Functionality
 
-Allows users to come to the site, create an account, browse books from the database, see specific info about specific books, and create and manipulate a reading list.
+Allows users to come to the site, create an account, browse books from the database, see more info about specific books, and create and manipulate a reading list.
