@@ -11,12 +11,12 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useGetAllBooks from '../hooks/useGetAllBooks'
-import { Box } from '@mui/system'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import { AppContext } from '../context/AppContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 
   const ExpandMore = styled((props) => {
@@ -41,11 +41,34 @@ export default function BookCard({book}) {
     const handleExpandClick = (i) => {
       setExpandedId(expandedId === i? -1 : i);
     };
+
+    const container = {
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.5
+        }
+      }
+    }
+    
+    const item = {
+      hidden: { opacity: 0 },
+      show: { opacity: 1 },
+      
+    }
   
     return (
-      <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-      {books?.books.map((book)=>(
-      <Card key={book.id} sx={{ width: 345, mb: 3}}>
+      <motion.div variants={container} initial="hidden" animate="show"
+      style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+      {books?.books.map((book, i)=>(
+      <motion.div variants={item} 
+                  initial="hidden" 
+                  aniamte="show" key={book.id}
+                  transition={{duration: 0.5, delay: i * .1}}
+                  whileHover={{scale:1.02,
+                              transition: {duration: .1, delay: 0}}}>
+      <Card key={book.id} sx={{ width: 320, m: 3}}>
         <CardHeader
           subheader={book.title}
           fontSize='10'
@@ -95,7 +118,8 @@ export default function BookCard({book}) {
           </CardContent>
         </Collapse>
       </Card>
+      </motion.div>
       ))}
-      </Box>
+      </motion.div>
     );
   }

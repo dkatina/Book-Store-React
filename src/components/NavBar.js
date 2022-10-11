@@ -105,6 +105,11 @@ export default function NavBar({children}) {
               Banana's Bookshelf
             </Typography>
           </Link>
+          <Link to='/library' style={{textDecoration: 'none'}}>
+          <Typography variant='p' color='secondary' sx={{mr: 2}}>
+              Library
+            </Typography>
+          </Link>
           {!user ? 
           <Link to='/register' style={{textDecoration:'none'}}>
             <Typography variant='p' color='secondary'>
@@ -149,7 +154,7 @@ export default function NavBar({children}) {
           </IconButton>
           <Typography color='primary'>Menu</Typography>
         </DrawerHeader>
-        <Divider color='warning'/>
+        <Divider color='white'/>
         <List>
           {stuff.map((item) => (
             <ListItem key={item.text} disablePadding>

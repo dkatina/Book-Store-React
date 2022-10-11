@@ -5,19 +5,19 @@ export const primaryTheme= {
     type: 'light',
     mode:'light',
     primary: {
-      main: '#F3DE8A',
+      main: '#eada4a',
     },
     secondary: {
-      main: '#D11149',
+      main: '#6d4b00',
     },
     error: {
       main: '#f10505',
     },
     warning: {
-      main: '#F17105',
+      main: '#ff7700',
     },
     info: {
-      main: '#00B97F',
+      main: '#9aff4b',
     },
   },
   components: {

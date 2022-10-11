@@ -31,7 +31,7 @@ export default function SingleBook() {
        } 
 
     return (
-    <Card sx={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Card sx={{ display: 'flex', justifyContent: 'space-between', maxWidth: '800px',  }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
@@ -53,7 +53,7 @@ export default function SingleBook() {
       </Box>
       <CardMedia
         component="img"
-        sx={{ width: 151 }}
+        sx={{ width: 150 }}
         image={book.img}
         alt="Live from space album cover"
       />
